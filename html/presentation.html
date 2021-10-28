@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Google sliPHes</title>
+		<link rel="stylesheet" href="../css/presentation.css" />
+		<link rel="shortcut icon" href="../assets/icon.ico" type="image/x-icon" />
+		<link
+			href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+			rel="stylesheet"
+		/>
+		<script src="../scripts/jquery-3.5.1.js"></script>
+		<script src="../scripts/jquery-ui-1.10.4.custom.js"></script>
+	</head>
+	<body>
+		<header class="header">
+			<a class="logo" href="./index.html">
+				<img src="../assets/slides-logo.png" alt="" />
+			</a>
+			<div class="header-information">
+				<div class="presentation-title">
+					<input
+						type="text"
+						class="title-input"
+						value="Untitled presentation"
+						id="title-input"
+						onkeyup="presentationNameListener()"
+					/>
+				</div>
+				<div class="menubar-container">
+					<ul>
+						<li class="menubar-btn" onclick="savePresentation()">Save</li>
+						<li class="menubar-btn" onclick="loadPresentation()">Load</li>
+						<li class="menubar-btn" onclick="toggleAutosave()">
+							Autosave
+							<div id="autosave-on">
+								<svg viewBox="0 0 512 512">
+									<path
+										fill="currentColor"
+										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+									></path>
+								</svg>
+							</div>
+						</li>
+						<li class="menubar-btn" onclick="resetPresentation()">Reset</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<div class="toolbar-container">
+			<div class="toolbar-section">
+				<div class="new-slide-btn toolbar-btn" onclick="addSlideBtnListener()">
+					<svg viewBox="0 0 448 512">
+						<path
+							fill="currentColor"
+							d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+						></path>
+					</svg>
+				</div>
+			</div>
+			<div class="divider"></div>
+			<div class="toolbar-section">
+				<div class="toolbar-btn active" onclick="changeActiveTool('cursor')">
+					<svg viewBox="0 0 320 512">
+						<path
+							fill="currentColor"
+							d="M302.189 329.126H196.105l55.831 135.993c3.889 9.428-.555 19.999-9.444 23.999l-49.165 21.427c-9.165 4-19.443-.571-23.332-9.714l-53.053-129.136-86.664 89.138C18.729 472.71 0 463.554 0 447.977V18.299C0 1.899 19.921-6.096 30.277 5.443l284.412 292.542c11.472 11.179 3.007 31.141-12.5 31.141z"
+						></path>
+					</svg>
+				</div>
+				<div class="toolbar-btn" onclick="changeActiveTool('text')">
+					<svg viewBox="0 0 448 512">
+						<path
+							fill="currentColor"
+							d="M432 416h-23.41L277.88 53.69A32 32 0 0 0 247.58 32h-47.16a32 32 0 0 0-30.3 21.69L39.41 416H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16h-19.58l23.3-64h152.56l23.3 64H304a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zM176.85 272L224 142.51 271.15 272z"
+						></path>
+					</svg>
+				</div>
+				<div class="toolbar-btn" onclick="changeActiveTool('square')">
+					<svg viewBox="0 0 448 512">
+						<path
+							fill="currentColor"
+							d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+						></path>
+					</svg>
+				</div>
+				<div class="toolbar-btn" onclick="changeActiveTool('circle')">
+					<svg viewBox="0 0 512 512">
+						<path
+							fill="currentColor"
+							d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200z"
+						></path>
+					</svg>
+				</div>
+				<div class="toolbar-btn" onclick="changeActiveTool('triangle')">
+					<svg viewBox="0 0 184.58 184.58">
+						<path
+							d="M182.004,146.234L108.745,19.345c-3.435-5.949-9.586-9.5-16.455-9.5s-13.021,3.551-16.455,9.5L2.576,146.234
+							c-3.435,5.948-3.435,13.051,0,19c3.435,5.949,9.586,9.5,16.455,9.5h146.518c6.869,0,13.021-3.552,16.455-9.5
+							C185.438,159.285,185.438,152.182,182.004,146.234z M169.88,158.234c-0.435,0.751-1.725,2.5-4.331,2.5H19.031
+							c-2.606,0-3.896-1.749-4.331-2.5c-0.434-0.752-1.302-2.744,0.001-5L87.96,26.345c1.303-2.256,3.462-2.5,4.33-2.5
+							s3.027,0.244,4.33,2.5l73.259,126.889C171.181,155.49,170.313,157.482,169.88,158.234z"
+						/>
+					</svg>
+				</div>
+				<div class="toolbar-btn" onclick="changeActiveTool('star')" onmouse>
+					<svg viewBox="0 -10 511.98685 511">
+						<path
+							d="m114.59375 491.140625c-5.609375 0-11.179688-1.75-15.933594-5.1875-8.855468-6.417969-12.992187-17.449219-10.582031-28.09375l32.9375-145.089844-111.703125-97.960937c-8.210938-7.167969-11.347656-18.519532-7.976562-28.90625 3.371093-10.367188 12.542968-17.707032 23.402343-18.710938l147.796875-13.417968 58.433594-136.746094c4.308594-10.046875 14.121094-16.535156 25.023438-16.535156 10.902343 0 20.714843 6.488281 25.023437 16.511718l58.433594 136.769532 147.773437 13.417968c10.882813.980469 20.054688 8.34375 23.425782 18.710938 3.371093 10.367187.253906 21.738281-7.957032 28.90625l-111.703125 97.941406 32.9375 145.085938c2.414063 10.667968-1.726562 21.699218-10.578125 28.097656-8.832031 6.398437-20.609375 6.890625-29.910156 1.300781l-127.445312-76.160156-127.445313 76.203125c-4.308594 2.558594-9.109375 3.863281-13.953125 3.863281zm141.398438-112.875c4.84375 0 9.640624 1.300781 13.953124 3.859375l120.277344 71.9375-31.085937-136.941406c-2.21875-9.746094 1.089843-19.921875 8.621093-26.515625l105.472657-92.5-139.542969-12.671875c-10.046875-.917969-18.6875-7.234375-22.613281-16.492188l-55.082031-129.046875-55.148438 129.066407c-3.882812 9.195312-12.523438 15.511718-22.546875 16.429687l-139.5625 12.671875 105.46875 92.5c7.554687 6.613281 10.859375 16.769531 8.621094 26.539062l-31.0625 136.9375 120.277343-71.914062c4.308594-2.558594 9.109376-3.859375 13.953126-3.859375zm-84.585938-221.847656s0 .023437-.023438.042969zm169.128906-.0625.023438.042969c0-.023438 0-.023438-.023438-.042969zm0 0"
+						/>
+					</svg>
+				</div>
+			</div>
+			<div class="divider"></div>
+			<div class="toolbar-section" id="shape-toolbar">
+				<div class="toolbar-btn" onclick="">
+					<label for="shape-color-input" class="color-input-label">
+						<svg viewBox="0 0 576 512" class="toolbar-btn-svg">
+							<path
+								class="toolbar-btn-path"
+								fill="currentColor"
+								d="M512 320s-64 92.65-64 128c0 35.35 28.66 64 64 64s64-28.65 64-64-64-128-64-128zm-9.37-102.94L294.94 9.37C288.69 3.12 280.5 0 272.31 0s-16.38 3.12-22.62 9.37l-81.58 81.58L81.93 4.76c-6.25-6.25-16.38-6.25-22.62 0L36.69 27.38c-6.24 6.25-6.24 16.38 0 22.62l86.19 86.18-94.76 94.76c-37.49 37.48-37.49 98.26 0 135.75l117.19 117.19c18.74 18.74 43.31 28.12 67.87 28.12 24.57 0 49.13-9.37 67.87-28.12l221.57-221.57c12.5-12.5 12.5-32.75.01-45.25zm-116.22 70.97H65.93c1.36-3.84 3.57-7.98 7.43-11.83l13.15-13.15 81.61-81.61 58.6 58.6c12.49 12.49 32.75 12.49 45.24 0s12.49-32.75 0-45.24l-58.6-58.6 58.95-58.95 162.44 162.44-48.34 48.34z"
+							></path>
+						</svg>
+					</label>
+					<input
+						type="color"
+						class="color-input"
+						name=""
+						id="shape-color-input"
+					/>
+				</div>
+			</div>
+			<div class="toolbar-section" id="text-toolbar">
+				<div class="toolbar-btn" onclick="">
+					<label for="text-color-input" class="color-input-label">
+						<svg viewBox="0 0 512 512" class="toolbar-btn-svg">
+							<path
+								class="toolbar-btn-path"
+								fill="currentColor"
+								d="M204.3 5C104.9 24.4 24.8 104.3 5.2 203.4c-37 187 131.7 326.4 258.8 306.7 41.2-6.4 61.4-54.6 42.5-91.7-23.1-45.4 9.9-98.4 60.9-98.4h79.7c35.8 0 64.8-29.6 64.9-65.3C511.5 97.1 368.1-26.9 204.3 5zM96 320c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm32-128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128-64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"
+							></path>
+						</svg>
+					</label>
+					<input
+						type="color"
+						class="color-input"
+						name=""
+						id="text-color-input"
+					/>
+				</div>
+				<div class="toolbar-btn input-container" onclick="">
+					<input
+						type="number"
+						name=""
+						id="font-size-input"
+						class="font-size-input"
+					/>
+				</div>
+			</div>
+		</div>
+		<div class="content-container">
+			<div class="slides-container" id="slides-container"></div>
+			<div class="workspace-container">
+				<div class="workspace" id="workspace"></div>
+			</div>
+		</div>
+	</body>
+	<script src="../scripts/class/Coordinate.js"></script>
+	<script src="../scripts/class/Presentation.js"></script>
+	<script src="../scripts/class/Object.js"></script>
+	<script src="../scripts/class/Slide.js"></script>
+	<script src="../scripts/event-listener.js"></script>
+	<script src="../scripts/presentation.js"></script>
+</html>
